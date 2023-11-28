@@ -1,4 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+
+using TeamVisionGR.Infra.Data.Context;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Conexão com banco de dados
+builder.Services.AddDbContext<ApplicationDbContext>(options => 
+    options.UseNpgsql(builder.Configuration.GetSection("MySettings:ConnectionStrings:DefaultConnection").Value)
+);
 
 // Add services to the container.
 
