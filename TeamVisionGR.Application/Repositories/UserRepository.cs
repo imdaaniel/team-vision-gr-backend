@@ -19,7 +19,7 @@ namespace TeamVisionGR.Application.Repositories
 
         public async Task<User> CreateUserAsync(User user)
         {
-            _dbContext.Users.Add(user);
+            _dbContext.User.Add(user);
             await _dbContext.SaveChangesAsync();
 
             return user;
@@ -27,23 +27,23 @@ namespace TeamVisionGR.Application.Repositories
 
         public async Task<bool> EmailExistsAsync(string email)
         {
-            return await _dbContext.Users.AnyAsync(u => u.Email == email);
+            return await _dbContext.User.AnyAsync(u => u.Email == email);
         }
 
         public async Task<User?> GetUserByEmailAsync(string email)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return await _dbContext.User.FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<int> UpdateUserAsync(User user)
         {
-            _dbContext.Users.Update(user);
+            _dbContext.User.Update(user);
             return await _dbContext.SaveChangesAsync();
         }
 
         public async Task<User?> GetUserByIdAsync(Guid userId)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            return await _dbContext.User.FirstOrDefaultAsync(u => u.Id == userId);
         }
     }
 }

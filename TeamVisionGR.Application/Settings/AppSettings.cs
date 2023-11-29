@@ -2,7 +2,8 @@ namespace TeamVisionGR.Application.Settings
 {
     public class AppSettings
     {
-        public string BaseUrl { get; set; }
+        public string AppUrl { get; set; }
+        public string ApiUrl { get; set; }
         public ConnectionStrings ConnectionStrings { get; set; }
         public Jwt Jwt { get; set; }
         public MailSettings Mail { get; set; }

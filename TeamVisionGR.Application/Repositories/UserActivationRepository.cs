@@ -16,7 +16,7 @@ namespace TeamVisionGR.Application.Repositories
 
         public async Task<UserActivation> CreateAsync(UserActivation userActivation)
         {
-            _dbContext.UserActivations.Add(userActivation);
+            _dbContext.UserActivation.Add(userActivation);
             await _dbContext.SaveChangesAsync();
 
             return userActivation;
@@ -24,10 +24,10 @@ namespace TeamVisionGR.Application.Repositories
 
         public async Task<UserActivation?> FindById(Guid activationId)
         {
-            UserActivation? userActivation = await _dbContext.UserActivations.FirstOrDefaultAsync(u => u.Id == activationId);
+            UserActivation? userActivation = await _dbContext.UserActivation.FirstOrDefaultAsync(u => u.Id == activationId);
 
             if (userActivation != null) {
-                userActivation.User = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userActivation.UserId);
+                userActivation.User = await _dbContext.User.FirstOrDefaultAsync(u => u.Id == userActivation.UserId);
                 return userActivation;
             }
 
@@ -36,7 +36,7 @@ namespace TeamVisionGR.Application.Repositories
 
         public async Task<UserActivation?> FindValidUserActivation(Guid userId)
         {
-            return await _dbContext.UserActivations.FirstOrDefaultAsync(u => 
+            return await _dbContext.UserActivation.FirstOrDefaultAsync(u => 
                 !u.Expired
                 && !u.Activated
                 && (DateTime.UtcNow - u.SendingMoment).TotalHours <= 3
@@ -47,7 +47,7 @@ namespace TeamVisionGR.Application.Repositories
         {
             try
             {
-                List<UserActivation> previousUserActivations = await _dbContext.UserActivations.Where(u => u.UserId == userId).ToListAsync();
+                List<UserActivation> previousUserActivations = await _dbContext.UserActivation.Where(u => u.UserId == userId).ToListAsync();
 
                 previousUserActivations.ForEach(u => u.Expired = true);
 
@@ -62,7 +62,7 @@ namespace TeamVisionGR.Application.Repositories
 
         public async Task<UserActivation> UpdateAsync(UserActivation userActivation)
         {
-            _dbContext.UserActivations.Update(userActivation);
+            _dbContext.UserActivation.Update(userActivation);
             await _dbContext.SaveChangesAsync();
 
             return userActivation;

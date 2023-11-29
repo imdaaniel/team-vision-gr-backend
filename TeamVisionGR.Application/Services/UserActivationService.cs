@@ -159,7 +159,7 @@ namespace TeamVisionGR.Application.Services
 
         private string GetActivationUrl(UserActivation userActivation)
         {
-            return $"{_appSettings.BaseUrl}/Authentication/Activate/{userActivation.Id}";
+            return $"{_appSettings.AppUrl}/Authentication/Activate/{userActivation.Id}";
         }
     }
 }

@@ -29,6 +29,11 @@ namespace TeamVisionGR.Application.Services.Authentication
         {
             var response = new ResponseService<User>();
 
+            if (!signUpRequestDto.Email.Contains("@modalgr.com.br")) {
+                response.AddError("O email precisa fazer parte do domínio modalgr.com.br");
+                return response;
+            }
+
             if (await _userRepository.EmailExistsAsync(signUpRequestDto.Email))
             {
                 response.AddError("Email já cadastrado");

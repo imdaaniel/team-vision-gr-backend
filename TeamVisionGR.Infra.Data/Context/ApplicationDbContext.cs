@@ -6,8 +6,10 @@ namespace TeamVisionGR.Infra.Data.Context
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserActivation> UserActivations { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<UserActivation> UserActivation { get; set; }
+        public DbSet<Project> Project { get; set; }
+        public DbSet<Collaborator> Collaborator { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }

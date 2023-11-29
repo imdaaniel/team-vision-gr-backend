@@ -32,7 +32,13 @@ namespace TeamVisionGR.Application.Services.Mail
                     EnableSsl = true
                 };
 
-                var message = new MailMessage(_appSettings.Mail.Sender.Email, receiver, subject, body);
+                MailAddress from = new (_appSettings.Mail.Sender.Email, _appSettings.Mail.Sender.Name);
+                MailAddress to = new (receiver);
+
+                MailMessage message = new (from, to);
+                message.Subject = subject;
+                message.Body = body;
+                
                 await client.SendMailAsync(message);
 
                 return true;

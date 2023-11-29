@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TeamVisionGR.Infra.Data.Context;
@@ -11,9 +12,11 @@ using TeamVisionGR.Infra.Data.Context;
 namespace TeamVisionGR.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231129045406_CreateCollaboradorAndProjectTables")]
+    partial class CreateCollaboradorAndProjectTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace TeamVisionGR.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Collaborator");
+                    b.ToTable("Collaborators");
                 });
 
             modelBuilder.Entity("TeamVisionGR.Domain.Entities.Project", b =>
@@ -70,7 +73,7 @@ namespace TeamVisionGR.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Project");
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("TeamVisionGR.Domain.Entities.User", b =>
@@ -100,7 +103,7 @@ namespace TeamVisionGR.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TeamVisionGR.Domain.Entities.UserActivation", b =>
@@ -128,7 +131,7 @@ namespace TeamVisionGR.Infra.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserActivation");
+                    b.ToTable("UserActivations");
                 });
 
             modelBuilder.Entity("CollaboratorProject", b =>

@@ -12,6 +12,6 @@ namespace TeamVisionGR.Domain.Entities
 
         public string Password { get; set; }
 
-        public bool Active { get; set; }
+        public bool Active { get; set; } = false;
     }
 }

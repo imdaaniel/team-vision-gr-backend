@@ -4,25 +4,27 @@ using System.Security.Claims;
 using System.Text;
 
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
+using TeamVisionGR.Application.Settings;
 using TeamVisionGR.Domain.Entities;
 
 namespace TeamVisionGR.Application.Services
 {
     public class TokenService : ITokenService
     {
-        private readonly IConfiguration _configuration;
+        private readonly AppSettings _appSettings;
 
-        public TokenService(IConfiguration configuration)
+        public TokenService(IOptions<AppSettings> appSettings)
         {
-            _configuration = configuration;
+            _appSettings = appSettings.Value;
         }
 
         public string GenerateToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var secret = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
+            var secret = Encoding.ASCII.GetBytes(_appSettings.Jwt.Secret);
 
             SecurityTokenDescriptor tokenDescriptor = new()
             {
