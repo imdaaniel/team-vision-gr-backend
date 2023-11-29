@@ -17,9 +17,15 @@ namespace TeamVisionGR.API.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetProjectsList()
+        public async Task<IActionResult> GetProjectsList([FromQuery] GetProjectListRequestModel model)
         {
-            var response = await _projectService.GetAllAsync();
+            var dto = new GetProjectListRequestDto()
+            {
+                Name = model.Name,
+                Active = model.Active,
+            };
+
+            var response = await _projectService.GetAllAsync(dto);
 
             return Response(response);
         }

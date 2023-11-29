@@ -7,7 +7,7 @@ namespace TeamVisionGR.Application.Services
     {
         Task<ResponseService<Project>> CreateAsync(CreateProjectRequestDto dto);
         Task<ResponseService<Project>> GetByIdAsync(Guid projectId);
-        Task<ResponseService<List<Project>?>> GetAllAsync();
+        Task<ResponseService<List<Project>?>> GetAllAsync(GetProjectListRequestDto dto);
         Task<ResponseService<Project>> UpdateAsync(UpdateProjectRequestDto dto);
         Task<ResponseService> DeleteAsync(Guid projectId);
     }

@@ -86,13 +86,24 @@ namespace TeamVisionGR.Application.Services
             return currentProject;
         }
 
-        public async Task<ResponseService<List<Project>>> GetAllAsync()
+        public async Task<ResponseService<List<Project>>> GetAllAsync(GetProjectListRequestDto dto)
         {
             var response = new ResponseService<List<Project>>();
 
-            List<Project>? projects = await _projectRepository.GetAllAsync();
+            IEnumerable<Project>? projectQuery = await _projectRepository.GetAllAsync();
 
-            response.Data = projects;
+            if (dto.Name != null)
+            {
+                projectQuery = projectQuery.Where(p => p.Name.Contains(dto.Name, StringComparison.OrdinalIgnoreCase));
+            }
+            if (dto.Active != null)
+            {
+                projectQuery = projectQuery.Where(p => p.Active == dto.Active);
+            }
+
+            List<Project>? projectList = projectQuery.ToList();
+
+            response.Data = projectList;
             return response;
         }
 
