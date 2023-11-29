@@ -6,7 +6,7 @@ namespace TeamVisionGR.Application.Repositories
     {
         Task<Project> CreateAsync(Project project);
         Task<Project?> FindById(Guid projectId);
-        Task<List<Project>?> GetAllAsync();
+        IQueryable<Project> GetQueryable();
         Task<Project> UpdateAsync(Project project);
         Task<bool> DeleteAsnyc(Project project);
     }

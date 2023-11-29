@@ -30,6 +30,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserActivationRepository, UserActivationRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<ICollaboratorRepository, CollaboratorRepository>();
 
 // Serviços
 builder.Services.AddScoped<TeamVisionGR.Application.Services.Authentication.IAuthenticationService, TeamVisionGR.Application.Services.Authentication.AuthenticationService>();
@@ -41,6 +42,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserActivationService, UserActivationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<ICollaboratorService, CollaboratorService>();
 
 builder.Services.AddControllers(options => {
     options.Filters.Add<CustomResponseFilter>();

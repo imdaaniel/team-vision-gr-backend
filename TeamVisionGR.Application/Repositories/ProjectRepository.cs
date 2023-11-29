@@ -35,9 +35,9 @@ namespace TeamVisionGR.Application.Repositories
             return await _dbContext.Project.FirstOrDefaultAsync(u => u.Id == projectId);
         }
 
-        public async Task<List<Project>?> GetAllAsync()
+        public IQueryable<Project> GetQueryable()
         {
-            return await _dbContext.Project.Where(p => p.Active == true).ToListAsync();
+            return _dbContext.Project.AsQueryable<Project>();
         }
 
         public async Task<Project> UpdateAsync(Project project)

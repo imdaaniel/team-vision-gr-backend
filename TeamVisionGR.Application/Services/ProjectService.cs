@@ -90,7 +90,7 @@ namespace TeamVisionGR.Application.Services
         {
             var response = new ResponseService<List<Project>>();
 
-            IEnumerable<Project>? projectQuery = await _projectRepository.GetAllAsync();
+            IQueryable<Project> projectQuery = _projectRepository.GetQueryable();
 
             if (dto.Name != null)
             {
