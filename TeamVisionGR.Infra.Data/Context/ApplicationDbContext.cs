@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using TeamVisionGR.Domain.Entities;
+using TeamVisionGR.Infra.Data.Mappings;
 
 namespace TeamVisionGR.Infra.Data.Context
 {
@@ -10,26 +11,20 @@ namespace TeamVisionGR.Infra.Data.Context
         public DbSet<UserActivation> UserActivation { get; set; }
         public DbSet<Project> Project { get; set; }
         public DbSet<Collaborator> Collaborator { get; set; }
+        public DbSet<CollaboratorProject> CollaboratorProject { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Obtendo todas as classes que implementam IEntityTypeConfiguration<T>
-            // Fiz dessa forma pra nao ter que adicionar uma linha para cada classe de mapping
-            var mappings = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(p => typeof(IEntityTypeConfiguration<>).IsAssignableFrom(p) && !p.IsAbstract);
+            modelBuilder.ApplyConfiguration(new UserMapping());
+            modelBuilder.ApplyConfiguration(new UserMapping());
+            modelBuilder.ApplyConfiguration(new CollaboratorMapping());
+            modelBuilder.ApplyConfiguration(new ProjectMapping());
+            modelBuilder.ApplyConfiguration(new CollaboratorProjectMapping());
 
-            // Percorrendo cada classe mapping
-            foreach (var mappingClass in mappings)
-            {
-                dynamic mappingInstance = Activator.CreateInstance(mappingClass);
-                modelBuilder.ApplyConfiguration(mappingInstance);
-            }
-
-            base.OnModelCreating(modelBuilder);
+            // base.OnModelCreating(modelBuilder);
         }
     }
 }

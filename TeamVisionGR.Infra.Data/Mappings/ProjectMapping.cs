@@ -15,8 +15,7 @@ namespace TeamVisionGR.Infra.Data.Mappings
                 .IsRequired();
 
             builder.Property(e => e.Active)
-                .IsRequired()
-                .HasDefaultValue(true);
+                .IsRequired();
         }
     }
 }
