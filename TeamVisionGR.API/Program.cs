@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -6,7 +5,6 @@ using TeamVisionGR.API.Filters;
 using TeamVisionGR.API.Middleware;
 using TeamVisionGR.Application.Repositories;
 using TeamVisionGR.Application.Services;
-using TeamVisionGR.Application.Services.Authentication;
 using TeamVisionGR.Application.Services.Mail;
 using TeamVisionGR.Application.Settings;
 using TeamVisionGR.Infra.Data.Context;
@@ -31,6 +29,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserActivationRepository, UserActivationRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ICollaboratorRepository, CollaboratorRepository>();
+builder.Services.AddScoped<ICollaboratorProjectRepository, CollaboratorProjectRepository>();
 
 // Serviços
 builder.Services.AddScoped<TeamVisionGR.Application.Services.Authentication.IAuthenticationService, TeamVisionGR.Application.Services.Authentication.AuthenticationService>();
@@ -43,6 +42,7 @@ builder.Services.AddScoped<IUserActivationService, UserActivationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ICollaboratorService, CollaboratorService>();
+builder.Services.AddScoped<ICollaboratorProjectService, CollaboratorProjectService>();
 
 builder.Services.AddControllers(options => {
     options.Filters.Add<CustomResponseFilter>();
