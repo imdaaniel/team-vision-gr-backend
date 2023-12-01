@@ -60,7 +60,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "[name] API",
+        Title = "TeamVision GR API",
         Version = "v1"
     });
 
