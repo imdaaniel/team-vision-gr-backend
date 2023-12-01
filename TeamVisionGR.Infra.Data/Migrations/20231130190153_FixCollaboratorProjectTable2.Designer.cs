@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TeamVisionGR.Infra.Data.Context;
@@ -11,9 +12,11 @@ using TeamVisionGR.Infra.Data.Context;
 namespace TeamVisionGR.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231130190153_FixCollaboratorProjectTable2")]
+    partial class FixCollaboratorProjectTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,9 @@ namespace TeamVisionGR.Infra.Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("EntryDate")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<DateTime?>("LeavingDate")
                         .HasColumnType("timestamp with time zone");
@@ -147,17 +152,21 @@ namespace TeamVisionGR.Infra.Data.Migrations
 
             modelBuilder.Entity("TeamVisionGR.Domain.Entities.CollaboratorProject", b =>
                 {
-                    b.HasOne("TeamVisionGR.Domain.Entities.Collaborator", null)
-                        .WithMany()
+                    b.HasOne("TeamVisionGR.Domain.Entities.Collaborator", "Collaborator")
+                        .WithMany("CollaboratorProjects")
                         .HasForeignKey("CollaboratorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TeamVisionGR.Domain.Entities.Project", null)
-                        .WithMany()
+                    b.HasOne("TeamVisionGR.Domain.Entities.Project", "Project")
+                        .WithMany("CollaboratorProjects")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Collaborator");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("TeamVisionGR.Domain.Entities.UserActivation", b =>
@@ -169,6 +178,16 @@ namespace TeamVisionGR.Infra.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TeamVisionGR.Domain.Entities.Collaborator", b =>
+                {
+                    b.Navigation("CollaboratorProjects");
+                });
+
+            modelBuilder.Entity("TeamVisionGR.Domain.Entities.Project", b =>
+                {
+                    b.Navigation("CollaboratorProjects");
                 });
 #pragma warning restore 612, 618
         }

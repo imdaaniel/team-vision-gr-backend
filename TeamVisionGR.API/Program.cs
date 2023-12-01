@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -11,7 +12,8 @@ using TeamVisionGR.Infra.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<AppSettings>(options => {
+builder.Services.Configure<AppSettings>(options =>
+{
     builder.Configuration.GetSection("MySettings").Bind(options);
 });
 
@@ -20,7 +22,7 @@ var jwtService = new JwtService(builder.Configuration);
 jwtService.AddJwtAuthentication(builder.Services);
 
 // Conexão com banco de dados
-builder.Services.AddDbContext<ApplicationDbContext>(options => 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetSection("MySettings:ConnectionStrings:DefaultConnection").Value)
 );
 
@@ -44,17 +46,21 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ICollaboratorService, CollaboratorService>();
 builder.Services.AddScoped<ICollaboratorProjectService, CollaboratorProjectService>();
 
-builder.Services.AddControllers(options => {
+builder.Services.AddControllers(options =>
+{
     options.Filters.Add<CustomResponseFilter>();
 });
+// .AddJsonOptions(jsonOptions =>
+//     jsonOptions.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve
+// );
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => 
+builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo {
-        Title = "MovieSeeker API",
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "[name] API",
         Version = "v1"
     });
 

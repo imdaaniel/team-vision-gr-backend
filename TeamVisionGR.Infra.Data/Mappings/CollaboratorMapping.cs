@@ -17,6 +17,13 @@ namespace TeamVisionGR.Infra.Data.Mappings
             builder.Property(e => e.Active)
                 .IsRequired()
                 .HasDefaultValue(true);
+
+            builder.HasMany(e => e.Projects)
+                .WithMany(p => p.Collaborators)
+                .UsingEntity<CollaboratorProject>(
+                    left => left.HasOne<Project>().WithMany().HasForeignKey(e => e.ProjectId),
+                    right => right.HasOne<Collaborator>().WithMany().HasForeignKey(e => e.CollaboratorId)
+                );
         }
     }
 }

@@ -16,6 +16,10 @@ namespace TeamVisionGR.Infra.Data.Mappings
 
             builder.Property(e => e.Active)
                 .IsRequired();
+
+            // builder.HasMany(e => e.Collaborators)
+            //     .WithMany(c => c.Projects)
+            //     .UsingEntity<CollaboratorProject>();
         }
     }
 }

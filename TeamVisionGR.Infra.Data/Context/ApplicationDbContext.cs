@@ -20,9 +20,8 @@ namespace TeamVisionGR.Infra.Data.Context
         {
             modelBuilder.ApplyConfiguration(new UserMapping());
             modelBuilder.ApplyConfiguration(new UserMapping());
-            modelBuilder.ApplyConfiguration(new CollaboratorMapping());
             modelBuilder.ApplyConfiguration(new ProjectMapping());
-            modelBuilder.ApplyConfiguration(new CollaboratorProjectMapping());
+            modelBuilder.ApplyConfiguration(new CollaboratorMapping());
 
             // base.OnModelCreating(modelBuilder);
         }

@@ -32,7 +32,10 @@ namespace TeamVisionGR.Application.Repositories
 
         public async Task<Collaborator?> FindById(Guid collaboratorId)
         {
-            return await _dbContext.Collaborator.FirstOrDefaultAsync(u => u.Id == collaboratorId);
+            return await _dbContext.Collaborator
+                .Where(e => e.Id == collaboratorId)
+                // .Include(e => e.Projects)
+                .FirstOrDefaultAsync();
         }
 
         public IQueryable<Collaborator> GetQueryable()
